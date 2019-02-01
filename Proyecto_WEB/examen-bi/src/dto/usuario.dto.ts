@@ -5,24 +5,24 @@ export class UsuarioDto {
 
     @IsOptional()
     @IsInt()
-    id:number;
+    id?:number;
 
     @IsString()
     @IsNotEmpty()
-    nombre_usuario:string;
+    nombre_usuario?:string;
 
     @IsString()
     @IsNotEmpty()
-    email_usuario:string;
-
-
-    @IsString()
-    @IsNotEmpty()
-    password_usuario:string;
+    email_usuario?:string;
 
 
     @IsString()
     @IsNotEmpty()
-    fecha_nacimiento_usuario:string;
+    password_usuario?:string;
+
+
+    @IsString()
+    @IsNotEmpty()
+    fecha_nacimiento_usuario?:string;
 
 }

@@ -15,7 +15,7 @@ export class RolEntity {
             length:30
         }
     )
-    name:string;
+    rol_nombre:string;
 
     @OneToMany(
         type => RolPorUsuarioEntity,

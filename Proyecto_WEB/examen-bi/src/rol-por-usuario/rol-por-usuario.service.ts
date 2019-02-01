@@ -8,6 +8,10 @@ export class RolPorUsuarioService {
     constructor(
         @InjectRepository(RolPorUsuarioEntity)
         private readonly _rolPorUsuarioService: Repository<RolPorUsuarioEntity>){
-
 }
+
+        traerTodo(){
+            return this._rolPorUsuarioService.find()
+        }
+
 }
