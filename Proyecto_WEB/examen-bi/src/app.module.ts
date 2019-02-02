@@ -15,11 +15,11 @@ import {RolModule} from "./rol/rol.module";
       TypeOrmModule.forRoot({
           type: 'mysql',
           host: 'localhost',
-          port: 32769,
-          username: 'root',
-          password: 'root',
-          database: 'cualquiera',
-          // BDD Ya existe -> synchronized: false
+          port: 32773,
+          username: 'web',
+          password: '123',
+          database: 'web',
+          // BDD Ya existe -> syrsnchronized: false
           synchronize: true,
           //dropSchema: true, //borra la base y se vuelve a crear, buena idea para pruebas pero no para produccion
           entities: [

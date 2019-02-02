@@ -20,7 +20,6 @@ export class RolService {
 
     obtenerRol(){
         return this._rolService.find()
-        
     }
 
 }
