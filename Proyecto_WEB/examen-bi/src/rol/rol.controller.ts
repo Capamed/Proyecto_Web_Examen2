@@ -41,13 +41,20 @@ export  class RolController {
         @Res() response,
 
     ){
-        const roles:Rol[] = []
+        
+        let hol = [];
         const respuesta = await this._rolService.obtenerRol();
+            
+            respuesta.map(res=>{
+               res.rol_nombre
+             })
+             console.log(respuesta)
         response.render('asignar-rol',{respuesta});
     }
 
 }
 
+//<% respuesta.map(res=>{ console.log(res) }) %> 
 export interface Rol{
 id:number,
 rol_nombre:string,

@@ -4,8 +4,9 @@ import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
   app.set('view engine', 'ejs');
   app.use(express.static('publico'));
+  await app.listen(3000);
+
 }
 bootstrap();

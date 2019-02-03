@@ -1,36 +1,64 @@
-<!doctype html>
+<!Doctype html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+
+    <title> EXAMEN</title>
+
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+
     <link rel="stylesheet" href="/css/animate.css">
 
 </head>
+
 <body>
-<h1>Login</h1>
-<p>Ingresa tus credenciales</p>
 
-<form action="usuario/login"
-      method="Post">
-    <div>
-        <label for="username">Usuario</label>
-        <input id="username" type="text" name="username">
+     
+    
+
+    <div class="row">
+            <div class="col-md-4 titulo"></div>
+            <div class="col-md-4 titulo"> <h1 align="center">LOGIN</h1></div>
+            <div class="col-md-4 titulo"></div>
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password">
+    <br>
+    <div class="row" >
+            <div class="col-md-4 titulo"></div>
+            <div class="col-md-4 titulo"><h2 align="center">Ingresa tus datos</h2></div>
+            <div class="col-md-4 titulo"></div>
     </div>
+    <br>
+    <div class="row">
+            <div class="col-md-4 titulo"></div>
+            <div class="col-md-4 titulo">
+      <form action="credenciales" method="Post" align="center">
+        
+        <div>
+            <label for="username">Usuario</label>
+            <input id="username" type="text" name="username">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password">
+        </div>
 
-    <button type="button" class="btn btn-primary">Login</button>
+        <button class="btn btn-outline-info " align="center">Registrar</button>
 
-</form>
+    </form>
+</div>
+    <div class="col-md-4 titulo"></div>
+</div>
 
-<script src="/js/jquery.js"></script>
-<script src="/js/popper.js"></script>
-<script src="/bootstrap/js/bootstrap.js"></script>
+
+
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>

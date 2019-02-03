@@ -2,9 +2,7 @@ import {Controller, Get, Post, Res, Body} from "@nestjs/common";
 import {UsuarioService} from "./usuario.service";
 import { UsuarioDto } from "src/dto/usuario.dto";
 import { response } from "express";
-import { RolController } from "src/rol/rol.controller";
-import { RolDto } from "src/dto/rol.dto";
-import { RolService } from "src/rol/rol.service";
+
 
 @Controller('usuario')
 
@@ -16,7 +14,6 @@ export class UsuarioController {
     ){
 
     }
-
 
     @Get('login')
     credenciales(
@@ -37,16 +34,20 @@ export class UsuarioController {
         @Body('password') password,
     )
     {
-        
         console.log(username,password)
         const usuario = new UsuarioDto
         usuario.nombre_usuario = username
         usuario.password_usuario = password
-        console.log(usuario)
         const respuesta = await this._usuarioService.credenciales(usuario)
-        console.log(respuesta)
         return respuesta
     }
+
+    @Get('menu-admin')
+        mostrarMenu(
+            @Res() response,
+        ){
+            response.render('menu-administrador')
+        }
 
 
     @Get('crear-usuario')
@@ -66,7 +67,6 @@ export class UsuarioController {
         usuario.email_usuario = usuarioCrear.email,
         usuario.password_usuario = usuarioCrear.password,
         usuario.fecha_nacimiento_usuario = usuarioCrear.fecha_nacimiento
-
         await this._usuarioService.crearUsuario(usuario)
 
     }

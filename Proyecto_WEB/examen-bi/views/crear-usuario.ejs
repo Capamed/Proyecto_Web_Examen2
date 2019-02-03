@@ -1,26 +1,78 @@
+<!Doctype html>
+<html lang="es">
 
-    <h1>Registro</h1>
-    <p>Ingresa tus datos</p>
-    
-    <form action="crear-usuario" method="Post">
-        <div>
-            <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" name="nombre">
-        </div>
-        <div>
-            <label for="email">Correo</label>
-            <input id="email" type="password" name="email">
-        </div>
-        <div>
-            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input id="fecha_nacimiento" type="text" name="fecha_nacimiento">
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password">
-        </div>
-        
-        <button>Registrar</button>
-    
-    </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <title> EXAMEN</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-4 titulo"></div>
+        <div class="col-md-4 titulo">
+            <h1 align="center">REGISTRO DE USUARIO</h1>
+        </div>
+        <div class="col-md-4 titulo"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 titulo"></div>
+        <div class="col-md-4 titulo">
+            <h2 align="center">Ingresa los datos</h2>
+        </div>
+        <div class="col-md-4 titulo"></div>
+    </div>
+
+        <div class="row">
+                <div class="col-md-4 titulo"></div>
+                <div class="col-md-4 titulo">
+                <form action="crear-usuario" method="Post">
+                       
+                    <div >
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" type="text" name="nombre">
+                    </div>
+                    <divtitulo"
+>
+                    <div>
+                        <label for="email">Correo</label>
+                        <input id="email" type="password" name="email">
+                    </div>
+
+                    <div>
+                        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                        <input id="fecha_nacimiento" type="text" name="fecha_nacimiento">
+                    </div>
+
+                    <div>
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password">
+                    </div>
+                    
+
+
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-outline-info " align="center">Registrar</button>
+                    </div>
+                </form>
+                </div>
+                <div class="col-md-4 titulo"></div>
+           
+        </div>
+
+
+        <script src="/js/jquery.js"></script>
+        <script src="/js/popper.js"></script>
+        <script src="/bootstrap/js/bootstrap.js"></script>
+</body>
+
+</html>
