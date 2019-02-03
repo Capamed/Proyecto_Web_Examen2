@@ -7,22 +7,56 @@ export class AutorEntity{
     @PrimaryGeneratedColumn()
     id?: number;
     
-    @Column({type: 'varchar', length:40})
-    nombres: string;
+    @Column(
+        {
+            name:'nombre_autor',
+            type: 'varchar', 
+            length:40,
+            default:'nombre',
+        }
+    )
+    nombre_autor: string;
     
-    @Column({type: 'varchar', length:40})
-    apellidos: string;
+    @Column(
+        {
+            name:'apellido_autor',
+            type: 'varchar',
+            length:40,
+            default:'apellido',
+        }
+    )
+    apellido_autor: string;
     
-    @Column({type: 'varchar', length:10})
-    fechaNacimiento?: string;
+    @Column(
+        {
+            name:'fecha_nacimiento',
+            type: 'varchar',
+            length:10,
+            default:'1/1/1995'
+        }
+    )
+    fecha_nacimiento?: string;
 
-    @Column({type: 'int'})
-    numeroPeliculas?: number;
+    @Column(
+        {
+            name:'numero_libros',
+            type: 'int',
+        }
+    )
+    numero_libros?: number;
 
-    @Column({type: 'boolean'})
-    retirado: boolean;
+    @Column(
+        {
+            name:'ecuatoriano',
+            type: 'boolean',
+        }
+    )
+    ecuatoriano: boolean;
 
-    @OneToMany(type => LibroEntity, libro => libro.id)
-    libro: LibroEntity[];
+    @OneToMany(
+        type => LibroEntity, 
+        libro => libro.autor
+    )
+    libros: LibroEntity[];
 
 }

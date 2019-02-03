@@ -7,19 +7,19 @@ export class AutorUpdateDto {
 
     @IsNotEmpty()
     @IsString()
-    nombres?: string;
+    nombre_autor?: string;
 
     @IsNotEmpty()
     @IsString()
-    apellidos?: string;
+    apellido_autor?: string;
 
     @IsNotEmpty()
     @IsDateString()
-    fechaNacimiento?: string;
+    fecha_nacimiento?: string;
 
     @IsNotEmpty()
     @IsNumber()
-    numeroLibros?: number;
+    numero_libros?: number;
 
     @IsNotEmpty()
     @IsBooleanString()

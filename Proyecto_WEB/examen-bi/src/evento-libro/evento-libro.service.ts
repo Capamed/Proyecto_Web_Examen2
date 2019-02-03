@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { EventoLibroEntity } from "./evento.entity";
 import { EventoLibroCreateDto } from "./evento-libro-create-dto/evento-libro-create.dto";
 import { EventoLibroUpdateDto } from "./evento-libro-update-dto/evento-libro-update.dto";
+import { EventoLibroEntity } from "./evento-libro.entity";
 
 @Injectable()
 

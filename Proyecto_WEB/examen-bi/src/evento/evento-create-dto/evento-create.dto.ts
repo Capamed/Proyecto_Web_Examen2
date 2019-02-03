@@ -1,24 +1,24 @@
 import { IsNotEmpty, IsString, IsNumber, IsOptional, IsBooleanString, IsDateString } from "class-validator";
 
-export class ActorCreateDto {
+export class EventoCreateDto {
 
     @IsOptional()
     id?: number;
 
     @IsNotEmpty()
     @IsString()
-    nombre?: string;
+    nombre_evento?: string;
 
     @IsNotEmpty()
     @IsDateString()
-    fecha?: string;
+    fecha_evento?: string;
 
     @IsNotEmpty()
     @IsNumber()
-    latitud?: number;
+    latitud_evento?: number;
 
     @IsNotEmpty()
     @IsNumber()
-    longitud?: number;
+    longitud_evento?: number;
 
 }

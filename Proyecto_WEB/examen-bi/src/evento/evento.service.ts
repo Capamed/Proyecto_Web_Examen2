@@ -2,9 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { EventoEntity } from "./evento.entity";
-import { EventoCreateDto } from "src/actor/actor-create-dto/actor-create.dto";
 import { EventoUpdateDto } from "./evento-update-dto/evento-update.dto";
-
+import { EventoCreateDto } from "./evento-create-dto/evento-create.dto";
 
 
 @Injectable()

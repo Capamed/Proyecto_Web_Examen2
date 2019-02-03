@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Post, Body, Delete, Req } from "@nestjs/common";
-import { EventoLibroService } from "./evento.service";
+import { EventoLibroService } from "./evento-libro.service";
 import { EventoLibroCreateDto } from "./evento-libro-create-dto/evento-libro-create.dto";
 import { EventoLibroUpdateDto } from "./evento-libro-update-dto/evento-libro-update.dto";
 

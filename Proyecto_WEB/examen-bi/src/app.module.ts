@@ -11,11 +11,12 @@ import {RolModule} from "./rol/rol.module";
 import { AutorModule } from './autor/autor.module';
 import { LibroModule } from './libro/libro.module';
 import { EventoModule } from './evento/evento.module';
-import { EventoLibroModule } from './evento-libro/evento.module';
+import { EventoLibroModule } from './evento-libro/evento-libro.module';
 import { AutorEntity } from './autor/autor.entity';
 import { LibroEntity } from './libro/libro.entity';
 import { EventoEntity } from './evento/evento.entity';
-import { EventoLibroEntity } from './evento-libro/evento.entity';
+import { EventoLibroEntity } from './evento-libro/evento-libro.entity';
+
 
 
 @Module({
@@ -23,7 +24,7 @@ import { EventoLibroEntity } from './evento-libro/evento.entity';
       TypeOrmModule.forRoot({
           type: 'mysql',
           host: 'localhost',
-          port: 32773,
+          port:  32769,
           username: 'web',
           password: '123',
           database: 'web',

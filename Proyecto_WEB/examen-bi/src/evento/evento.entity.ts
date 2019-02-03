@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
-import { PeliculaEntity } from "src/pelicula/pelicula.entity";
-import { EventoPeliculaEntity } from "src/evento-pelicula/evento.entity";
+import { EventoLibroEntity } from "src/evento-libro/evento-libro.entity";
 
 @Entity('evento')
 export class EventoEntity{
@@ -8,20 +7,45 @@ export class EventoEntity{
     @PrimaryGeneratedColumn()
     id?: number;
     
-    @Column({type: 'varchar', length:40})
-    nombre?: string;
+    @Column(
+        {
+            name:'nombre_evento',
+            type: 'varchar',
+            length:40
+       }
+    )
+    nombre_evento?: string;
     
-    @Column({type: 'varchar', length:10})
-    fecha?: string;
+    @Column(
+        {
+            name:'fecha_evento',
+            type: 'varchar', 
+            length:10
+        }
+    )
+    fecha_evento?: string;
     
-    @Column({type: 'decimal'})
-    latitud?: number;
+    @Column(
+        {
+            name:'latitud_evento',
+            type: 'decimal',
+        }
+    )
+    latitud_evento?: number;
 
-    @Column({type: 'decimal'})
-    longitud?: number;
+    @Column(
+        {
+            name:'longitud_evento',
+            type: 'decimal',
+        }
+    )
+    longitud_evento?: number;
 
-    @OneToMany(type => EventoPeliculaEntity, eventoPelicula => eventoPelicula.id)
-    eventoPelicula: EventoPeliculaEntity[];
+    @OneToMany(
+        type => EventoLibroEntity,
+        eventoLibro => eventoLibro.evento
+    )
+    eventosLibros: EventoLibroEntity[];
 
 
 }

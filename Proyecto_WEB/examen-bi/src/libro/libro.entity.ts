@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { AutorEntity } from "src/autor/autor.entity";
-import { EventoLibroEntity } from "src/evento-libro/evento.entity";
+import { EventoLibroEntity } from "src/evento-libro/evento-libro.entity";
+
 
 @Entity('libro')
 export class LibroEntity{
@@ -8,25 +9,67 @@ export class LibroEntity{
     @PrimaryGeneratedColumn()
     id?: number;
     
-    @Column({type: 'varchar', length:40})
-    nombre?: string;
+    @Column(
+        {
+            name: 'icbn_libro',
+            type: 'int',
+        }
+    )
+    icbn_libro?: number;
     
-    @Column({type: 'int'})
-    anioLanzamiento?: number;
+    @Column(
+        {
+            name: 'nombre_libro',
+            type: 'varchar', 
+            length:40
+        }
+    )
+    nombre_libro?: string;
     
-    @Column({type: 'int'})
-    rating?: number;
+    @Column(
+        {
+            name:'numero_paginas',
+            type: 'int',
+        }
+     )
+    numero_paginas?: number;
+    
+    @Column(
+        {
+            name:'edicion',
+            type: 'int',
+        }
+    )
+    edicion?: number;
 
-    @Column({type: 'varchar'})
-    actoresPrincipales?: string;
+    @Column(
+        {
+            name: 'fecha_publicacion',
+            type: 'varchar',
+            default:'1/1/1995',
+        }
+    )
+    fecha_publicacion?: string;
 
-    @Column({type: 'varchar'})
-    sinopsis?: string;
+    @Column(
+        {
+            name:'nombre_editorial',
+            type: 'varchar',
+            length:30
+        }
+    )
+    nombre_editorial?: string;
 
-    @ManyToOne(type => AutorEntity, autor => autor.id, {eager: true})
+    @ManyToOne(
+        type => AutorEntity, 
+        autor => autor.libros, {eager: true}
+    )
     autor: AutorEntity;
 
-    @OneToMany(type => EventoLibroEntity, eventoLibro => eventoLibro.id)
-    eventoLibro: EventoLibroEntity[];
+    @OneToMany(
+        type => EventoLibroEntity, 
+        eventoLibro => eventoLibro.libro
+    )
+    eventosLibro: EventoLibroEntity[];
 
 }

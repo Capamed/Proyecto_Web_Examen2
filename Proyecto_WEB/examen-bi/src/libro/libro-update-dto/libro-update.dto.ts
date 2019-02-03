@@ -7,15 +7,15 @@ export class LibroUpdateDto {
 
     @IsNotEmpty()
     @IsInt()
-    ICBN?: number;
+    icbn_libro?: number;
 
     @IsNotEmpty()
     @IsString()
-    nombre?: string;
+    nombre_libro?: string;
 
     @IsNotEmpty()
     @IsInt()
-    numeroPaginas?: number;
+    numero_paginas?: number;
 
     @IsNotEmpty()
     @IsInt()
@@ -23,10 +23,10 @@ export class LibroUpdateDto {
 
     @IsNotEmpty()
     @IsDateString()
-    fechaNacimiento?: string;
+    fecha_publicacion?: string;
 
     @IsNotEmpty()
     @IsString()
-    nombreEditorial?: string;
+    nombre_editorial?: string;
     
 }
