@@ -84,7 +84,6 @@ export class UsuarioController {
         @Session() sesion,
     )
     {
-
         sesion.usuario = undefined;
         sesion.destroy()
         res.redirect('login')

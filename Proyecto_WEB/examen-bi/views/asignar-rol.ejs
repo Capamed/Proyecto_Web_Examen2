@@ -4,9 +4,18 @@
 <form action="rol/asignar-rol" method="Get">
     <div>
         
-        <select>
-      <option value="<%=respuesta%>">Administrador</option>
-</select>
+        <select  class="form-control" id="conductores">
+
+            <% arregloConductores.forEach( (conductor)=> { %>
+                <option
+                    value="<%=conductor.id %>"
+                > 
+                    <%=conductor.nombre  %> 
+                    <%=conductor.apellido  %>
+                </option>
+            <% }) %>
+
+        </select>
     </div>  
     <br>
     <div class="row">
