@@ -24,7 +24,7 @@ export class UsuarioDto {
     password_usuario?:string;
 
 
-    @IsDateString()
+    @IsString()
     @IsNotEmpty()
     fecha_nacimiento_usuario?:string;
 
