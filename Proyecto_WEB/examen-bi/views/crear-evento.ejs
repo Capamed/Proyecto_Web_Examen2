@@ -1,0 +1,65 @@
+<%- include('header',{titulo:titulo}) %>
+
+
+<div class="container">
+
+    <% const estaCreando = typeof evento === "undefined" %>
+
+    <h1> <%= estaCreando ? 'Crear' : 'Actualizar' %> Evento</h1>
+
+    <p><%= estaCreando ? 'Cree' : 'Actualice' %> un evento.</p>
+
+    <form
+            action="/evento/<%= estaCreando ? 'crear' : 'actualizar' %>-evento/<%= estaCreando ? '' : evento.id %>"
+            method="POST">
+
+        <div>
+            <label for="nombre-evento">Nombre del evento:</label>
+            <input
+                    id="nombre-evento"
+                    name="nombre-evento"
+                    type="text"
+                    value="<%= estaCreando ? '' : evento.nombre %>">
+        </div>
+
+        <div>
+            <label for="fecha-evento">Fecha del evento:</label>
+            <input
+                    id="fecha-evento"
+                    name="fecha-evento"
+                    type="date"
+                    value="<%= estaCreando ? '' : evento.fecha %>">
+        </div>
+
+        <div>
+            <label>Ubicación del evento:</label>
+
+            <div>
+                <label for="latitud-evento">Latitud:</label>
+                <input
+                        id="latitud-evento"
+                        name="latitud-evento"
+                        type="number"
+                        value="<%= estaCreando ? '' : evento.latitud %>">
+            </div>
+
+            <div>
+                <label for="longitud-evento">Longitud:</label>
+                <input
+                        id="longitud-evento"
+                        name="longitud-evento"
+                        type="number"
+                        value="<%= estaCreando ? '' : evento.longitud %>">
+            </div>
+
+        </div>
+
+
+        <button><%= estaCreando ? 'Crear' : 'Actualizar' %> evento</button>
+
+    </form>
+</div>
+
+
+<%- include('librerias') %>
+<%- include('footer') %>

@@ -1,0 +1,84 @@
+<%- include('header',{titulo:titulo}) %>
+
+
+<div class="container">
+
+    <% const estaCreando = typeof libro === "undefined" %>
+
+    <h1> <%= estaCreando ? 'Crear' : 'Actualizar' %> Libro</h1>
+
+    <p><%= estaCreando ? 'Cree' : 'Actualice' %> un libro.</p>
+
+    <form
+            action="/libro/<%= estaCreando ? 'crear' : 'actualizar' %>-libro/<%= estaCreando ? '' : libro.id %>"
+            method="POST">
+
+        <div>
+            <label for="isbn">ISBN:</label>
+            <input
+                    id="isbn"
+                    name="isbn"
+                    type="number"
+                    value="<%= estaCreando ? '' : libro.isbn %>">
+        </div>
+
+        <div>
+            <label for="nombre-libro">Nombre:</label>
+            <input
+                    id="nombre-libro"
+                    name="nombre-libro"
+                    type="text"
+                    value="<%= estaCreando ? '' : libro.nombre %>">
+        </div>
+
+        <div>
+            <label for="numero-paginas-libro">Numero de paginas:</label>
+            <input
+                    id="numero-paginas-libro"
+                    name="numero-paginas-libro"
+                    type="number"
+                    value="<%= estaCreando ? '' : libro.numeroPaginas %>">
+        </div>
+
+        <div>
+            <label for="edicion-libro">Fecha de Nacimiento:</label>
+            <input
+                    id="edicion-libro"
+                    name="edicion-libro"
+                    type="number"
+                    value="<%= estaCreando ? '' : libro.edicion %>">
+        </div>
+
+        <div>
+            <label for="fecha-publicacion-libro">Fecha de publicacion:</label>
+            <input
+                    id="fecha-publicacion-libro"
+                    name="fecha-publicacion-libro"
+                    type="date"
+                    value="<%= estaCreando ? '' : libro.fechaPublicacion %>">
+        </div>
+
+        <div>
+            <label for="nombre-editorial-libro">Fecha de publicacion:</label>
+            <input
+                    id="nombre-editorial-libro"
+                    name="nombre-editorial-libro"
+                    type="text"
+                    value="<%= estaCreando ? '' : libro.nombreEditorial %>">
+        </div>
+
+        <div class="form-group">
+            <label for="autor">Autor:</label>
+            <select class="form-control" id="autor">
+                <option value="1">Sí</option>
+                <option value="2">No</option>
+            </select>
+        </div>
+
+        <button><%= estaCreando ? 'Crear' : 'Actualizar' %> libro</button>
+    </form>
+</div>
+
+
+<%- include('librerias') %>
+<%- include('footer') %>

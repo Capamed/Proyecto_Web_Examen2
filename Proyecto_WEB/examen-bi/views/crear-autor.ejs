@@ -1,0 +1,66 @@
+<%- include('header',{titulo:titulo}) %>
+
+
+<div class="container">
+
+    <% const estaCreando = typeof autor === "undefined" %>
+
+    <h1> <%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</h1>
+
+    <p><%= estaCreando ? 'Cree' : 'Actualice' %> un autor.</p>
+
+    <form
+            action="/autor/<%= estaCreando ? 'crear' : 'actualizar' %>-autor/<%= estaCreando ? '' : autor.id %>"
+            method="POST">
+
+        <div>
+            <label for="nombre-autor">Nombres:</label>
+            <input
+                    id="nombre-autor"
+                    name="nombre-autor"
+                    type="text"
+                    value="<%= estaCreando ? '' : autor.nombres %>">
+        </div>
+
+        <div>
+            <label for="apellido-autor">Apellidos:</label>
+            <input
+                    id="apellido-autor"
+                    name="apellido-autor"
+                    type="text"
+                    value="<%= estaCreando ? '' : autor.apellidos %>">
+        </div>
+
+        <div>
+            <label for="fecha-nacimiento-autor">Fecha de nacimiento:</label>
+            <input
+                    id="fecha-nacimiento-autor"
+                    name="fecha-nacimiento-autor"
+                    type="date"
+                    value="<%= estaCreando ? '' : autor.fechaNacimiento %>">
+        </div>
+
+        <div class="form-group">
+            <label for="nacionalidad">Ecuatoriando</label>
+            <select class="form-control" id="nacionalidad">
+                <option value="1">Sí</option>
+                <option value="2">No</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="numero-libros-autor">Numero de libros:</label>
+            <input
+                    id="numero-libros-autor"
+                    name="numero-libros-autor"
+                    type="number"
+                    value="<%= estaCreando ? '' : autor.numeroLibros %>">
+        </div>
+
+        <button><%= estaCreando ? 'Crear' : 'Actualizar' %> autor</button>
+    </form>
+</div>
+
+
+<%- include('librerias') %>
+<%- include('footer') %>
