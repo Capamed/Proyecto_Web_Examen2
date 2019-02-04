@@ -5,4 +5,5 @@ import { Injectable } from "@nestjs/common";
 export class RolesService{
     public esAdministrador:boolean = false;
     public esUsuario:boolean = false;
+    
 }

@@ -42,7 +42,6 @@ export  class RolController {
 
     ){
         
-        let hol = [];
         const respuesta = await this._rolService.obtenerRol();
             
             respuesta.map(res=>{

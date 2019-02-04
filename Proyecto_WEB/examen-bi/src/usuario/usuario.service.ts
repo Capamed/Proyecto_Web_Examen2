@@ -1,7 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./usuario.entity";
-import {Repository} from "typeorm";
+import {Repository, FindManyOptions} from "typeorm";
 import { UsuarioDto } from "src/dto/usuario.dto";
 
 @Injectable()
@@ -32,6 +32,12 @@ export class UsuarioService {
         console.log('holalsad',usuario)
         const respuesta= this._usuarioService.create(usuario)
         return this._usuarioService.save(respuesta)
+    }
+
+
+  buscar(parametrosBusqueda?: FindManyOptions<UsuarioEntity>)
+        :Promise<UsuarioEntity[]>{
+        return this._usuarioService.find(parametrosBusqueda)
     }
 
 }

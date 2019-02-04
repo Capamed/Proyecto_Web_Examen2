@@ -10,13 +10,13 @@ export class RolPorUsuarioEntity {
 
     @ManyToOne(
         type => RolEntity,
-        rol => rol.rolesPorUsuario
+        rol => rol.rolesPorUsuario, {eager: true}
     )
     rol:RolEntity;
 
     @ManyToOne(
         type => UsuarioEntity,
-        usuario => usuario.rolesPorUsuario,
+        usuario => usuario.rolesPorUsuario, 
     )
     usuario: UsuarioEntity;
 }
