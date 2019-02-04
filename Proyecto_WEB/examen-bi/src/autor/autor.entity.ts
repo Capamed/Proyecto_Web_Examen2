@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
 import { LibroEntity } from "src/libro/libro.entity";
+import { type } from "os";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
 
 @Entity('autor')
 export class AutorEntity{
@@ -59,4 +61,10 @@ export class AutorEntity{
     )
     libros: LibroEntity[];
 
+    @ManyToOne(
+        type=>UsuarioEntity,
+        usuario=>usuario.autores
+    )
+    usuario: UsuarioEntity;
+ 
 }

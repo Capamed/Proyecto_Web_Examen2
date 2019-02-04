@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Body, BadRequestException, Query } from "@nestjs/common";
+import { Controller, Get, Post, Res, Body, BadRequestException, Query ,Session, Param} from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
 import { UsuarioDto } from "src/dto/usuario.dto";
 import { response } from "express";
@@ -7,6 +7,8 @@ import { UsuarioEntity } from "./usuario.entity";
 import { FindManyOptions, Like } from "typeorm";
 import { CredencialesDto } from "src/dto/credenciales.dto";
 import { RolesService } from "./guards";
+import { RolPorUsuarioService } from "src/rol-por-usuario/rol-por-usuario.service";
+import { get } from "https";
 
 
 @Controller('usuario')
@@ -15,7 +17,8 @@ export class UsuarioController {
 
     constructor(
         private readonly _usuarioService: UsuarioService,
-        private readonly _rolesService: RolesService,
+        private readonly _rolPorUsuarioService :RolPorUsuarioService,
+        
     ) {
     }
 
@@ -26,14 +29,10 @@ export class UsuarioController {
         response.render('login')
     }
 
-    @Get()
-    async todos() {
-        return await this._usuarioService.traerUsuario()
-    }
-
     @Post('credenciales')
     async metodoCrendenciales(
         @Res() response,
+        @Session() session,
         @Body('username') username,
         @Body('password') password,
     ) {
@@ -47,37 +46,49 @@ export class UsuarioController {
             console.error('Errores: Usuario a crear - ', arregloErrores);
             throw new BadRequestException('Datos incorrectos');
         } else {
-            const respuesta = await this._usuarioService.credenciales(usuario)
-            const tienesRolAsignado = respuesta[0].rolesPorUsuario.length > 0;
-            if (tienesRolAsignado) {
-                const rol = respuesta[0].rolesPorUsuario[0].rol.rol_nombre
-                switch (rol) {
-                    case 'administrador':
-                        this._rolesService.esAdministrador = true
-                        // throw new BadRequestException('ES ADMIN');
-                        // redirecciona a la pagina principal como admin
-                        return response.redirect('crear-usuario')
-                    // break;
-                    case 'usuario':
-                        this._rolesService.esUsuario = true
-                        // throw new BadRequestException('ES USER');
-                        // redirecciona a la pagina principal como user
-                        return response.redirect('login')
-                    // break;
-                    default:
-                        throw new BadRequestException('NO ES NADA');
+            const respuestaAutenticacion = await this._usuarioService.credenciales(usuario)
+            if(respuestaAutenticacion){
+                const idUsuario= respuestaAutenticacion.id;
+                const rolUsuario = await this._rolPorUsuarioService.verificarRol(+idUsuario)
+                   if(rolUsuario){
+                       const nombreRol = rolUsuario.rol.rol_nombre
+                       session.rol = nombreRol;
+                       session.username = username;
+                       session.idUsuario = idUsuario;
+
+                       switch (nombreRol) {
+                        case 'usuario':
+                        response.redirect('crear-usuario')
+                            break;
+                        case 'administrador':
+                        response.redirect('inicio')
+                            break;
+                        default:
+                        response.send('Aun no se ha asignado una tarea para este rol')
+                    }
+                }else{
+                throw new BadRequestException({mensaje: 'Espere estamos verificando sus datos'})
+       
                 }
-            } else {
-                // throw new BadRequestException(':v');
-            }
-
-
-            // return respuesta
-            // response.redirect('login');
+         }  else{
+             response.redirect('login')
+         }
+        
         }
 
     }
 
+    @Get('logout')
+    async logout(
+        @Res() res,
+        @Session() sesion,
+    )
+    {
+
+        sesion.usuario = undefined;
+        sesion.destroy()
+        res.redirect('login')
+    }
 
 
     @Get('crear-usuario')
@@ -110,28 +121,81 @@ export class UsuarioController {
     }
 
 
-    @Get('buscar')
-    async buscar(
-        @Query('busqueda') busqueda: string,
-    ) {
-        let usuarios: UsuarioEntity[];
-        if (busqueda) {
-            const consulta: FindManyOptions<UsuarioEntity> = {
-                where: [
-                    {
-                        titulo: Like(`%${busqueda}%`)
-                    },
-                    {
-                        descripcion: Like(`%${busqueda}%`)
-                    }
-                ]
-            };
-            usuarios = await this._usuarioService.buscar(consulta);
-        } else {
-            usuarios = await this._usuarioService.buscar();
+    @Get('inicio')
+    async mostrarUsuario(
+        @Res() res,
+        @Session() sesion,
+        @Query('accion') accion:string,
+        @Query('nombre') nombre:string,
+        @Query('busqueda') busqueda:string
+    ){
+        if(sesion.rol==='administrador') {
+            let mensaje = undefined;
+    
+            if (accion && nombre) {
+                switch (accion) {
+                    case 'actualizar':
+                        mensaje = `Rol al usuario ${nombre} actualizado`;
+                        break;
+                    case 'borrar':
+                        mensaje = `Registro ${nombre} eliminado`;
+                        break;
+                }
+            }
+    
+            let usuarios: UsuarioEntity[];
+    
+            if (busqueda) {
+    
+                const consulta: FindManyOptions<UsuarioEntity> = {
+                    where: [
+                        {
+                            nombre_usuario: Like(`%${busqueda}%`)
+                        },
+                        {
+                            email_usuario: Like(`%${busqueda}%`)
+                        },
+                    ]
+                };
+    
+                usuarios = await this._usuarioService.buscar(consulta);
+            } else {
+    
+                usuarios = await this._usuarioService.buscar();
+            }
+    
+            res.render('tabla-usuarios',
+                {
+                    arregloUsuario: usuarios,
+                    mensaje: mensaje,
+    
+                })
+        }else{
+            throw new BadRequestException({mensaje: "No tiene acceso a esta vista"});
+        }
+    }
+    
+    
+    
+    
+    
+        @Post('borrar/:idUsuario')
+        async borrar(
+            @Param('idUsuario') idUsuario: string,
+            @Res() response
+        ) {
+            const usuarioEncontrado = await this._usuarioService
+                .buscarPorId(+idUsuario);
+    
+            await this._usuarioService.borrar(Number(idUsuario));
+    
+            const parametrosConsulta = `?accion=borrar&nombre=${usuarioEncontrado.nombre_usuario}`;
+    
+            response.redirect('/usuario/inicio' + parametrosConsulta);
         }
 
-    }
+
+
 
 
 

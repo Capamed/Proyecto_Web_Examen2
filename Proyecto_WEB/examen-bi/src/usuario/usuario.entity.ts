@@ -1,6 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RolPorUsuarioService } from "../rol-por-usuario/rol-por-usuario.service";
 import { RolPorUsuarioEntity } from "../rol-por-usuario/rol-por-usuario.entity";
+import { type } from "os";
+import { AutorEntity } from "src/autor/autor.entity";
 
 @Entity('usuario')
 
@@ -55,4 +57,11 @@ export class UsuarioEntity {
         rolPorUsuario => rolPorUsuario.usuario,{eager:true}
     )
     rolesPorUsuario: RolPorUsuarioEntity[];
+
+    @OneToMany(
+        type=> AutorEntity,
+        autor=> autor.usuario,{eager:true}
+    )
+
+    autores: AutorEntity[];
 }

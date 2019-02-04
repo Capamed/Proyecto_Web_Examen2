@@ -24,7 +24,7 @@ import { EventoLibroEntity } from './evento-libro/evento-libro.entity';
       TypeOrmModule.forRoot({
           type: 'mysql',
           host: 'localhost',
-          port:  32771,
+          port:  32769,
           username: 'web',
           password: '123',
           database: 'web',
