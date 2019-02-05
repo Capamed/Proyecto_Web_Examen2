@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Post, Session, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Res, Post, Session, Body, BadRequestException, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CredencialesDto } from './dto/credenciales.dto';
 import { validate } from 'class-validator';
@@ -15,7 +15,9 @@ export class AppController {
   @Get('login')
   credenciales(
       @Res() response,
+
   ) {
+  
       response.render('login')
   }
 
@@ -37,7 +39,6 @@ export class AppController {
       } else {
           const respuestaAutenticacion = await this._usuarioService.credenciales(usuario)
 
-          console.log(respuestaAutenticacion)
           if(respuestaAutenticacion){
               const idUsuario= respuestaAutenticacion.id;
               const rolUsuario = await this._rolPorUsuarioService.verificarRol(+idUsuario)
@@ -55,11 +56,11 @@ export class AppController {
                       response.redirect('/usuario/inicio')
                           break;
                       default:
-                      response.send('Aun no se ha asignado una tarea para este rol')
+                      response.redirect('login')
                   }
               }else{
-              //throw new BadRequestException({mensaje: 'Espere estamos verificando sus datos'})
-     
+                
+                response.redirect('login')
               }
        }  else{
            response.redirect('login')
