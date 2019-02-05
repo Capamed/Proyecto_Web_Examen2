@@ -15,7 +15,7 @@ export class UsuarioService {
     async credenciales(usuario:UsuarioDto):Promise<UsuarioEntity>{
         const consulta = {
             where: {
-                nombre_usuario: usuario.nombre_usuario,
+                email_usuario: usuario.email_usuario,
                 password_usuario: usuario.password_usuario
             }
 

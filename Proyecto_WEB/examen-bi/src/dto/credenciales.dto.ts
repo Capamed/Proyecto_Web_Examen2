@@ -1,15 +1,17 @@
-import { IsString, IsNotEmpty, MinLength, MaxLength } from "class-validator";
+import { IsString, IsNotEmpty, MinLength, MaxLength, Matches, IsEmail } from "class-validator";
 
 export class CredencialesDto{
 
-    @IsString()
     @IsNotEmpty()
-    nombre_usuario?:string;
+    @IsEmail()
+    email_usuario?:string;
 
+
+    @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$/)
     @IsString()
     @IsNotEmpty()
-    @MinLength(8)
-    @MaxLength(16)
     password_usuario?:string;
+
+    
 
 }

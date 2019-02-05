@@ -23,27 +23,28 @@ export class AppController {
   async metodoCrendenciales(
       @Res() response,
       @Session() session,
-      @Body('username') username,
+      @Body('email_usuario') username_email,
       @Body('password') password,
   ) {
-      console.log(username, password)
+      console.log(username_email, password)
       const usuario = new CredencialesDto
-      usuario.nombre_usuario = username
+      usuario.email_usuario = username_email
       usuario.password_usuario = password
       const arregloErrores = await validate(usuario);
       const existeErrores = arregloErrores.length > 0;
-      if (existeErrores) {
-          console.error('Errores: Usuario a crear - ', arregloErrores);
+      if (existeErrores) {          
           throw new BadRequestException('Datos incorrectos');
       } else {
           const respuestaAutenticacion = await this._usuarioService.credenciales(usuario)
+
+          console.log(respuestaAutenticacion)
           if(respuestaAutenticacion){
               const idUsuario= respuestaAutenticacion.id;
               const rolUsuario = await this._rolPorUsuarioService.verificarRol(+idUsuario)
                  if(rolUsuario){
                      const nombreRol = rolUsuario.rol.rol_nombre
                      session.rol = nombreRol;
-                     session.username = username;
+                     session.username_email = username_email;
                      session.idUsuario = idUsuario;
 
                      switch (nombreRol) {
@@ -57,7 +58,7 @@ export class AppController {
                       response.send('Aun no se ha asignado una tarea para este rol')
                   }
               }else{
-              throw new BadRequestException({mensaje: 'Espere estamos verificando sus datos'})
+              //throw new BadRequestException({mensaje: 'Espere estamos verificando sus datos'})
      
               }
        }  else{

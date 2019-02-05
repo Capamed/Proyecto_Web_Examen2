@@ -42,7 +42,7 @@ export class UsuarioController {
             throw new BadRequestException('Datos incorrectos');
         } else {
             await this._usuarioService.crearUsuario(usuario);
-            response.redirect('login');
+            response.redirect('/login');
         }
 
     }
@@ -58,17 +58,6 @@ export class UsuarioController {
     ){
         if(sesion.rol==='administrador') {
             let mensaje = undefined;
-    
-            if (accion && nombre) {
-                switch (accion) {
-                    case 'actualizar':
-                        mensaje = `Rol al usuario ${nombre} actualizado`;
-                        break;
-                    case 'borrar':
-                        mensaje = `Registro ${nombre} eliminado`;
-                        break;
-                }
-            }
     
             let usuarios: UsuarioEntity[];
     
