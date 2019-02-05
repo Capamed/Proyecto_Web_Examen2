@@ -2,6 +2,7 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository, FindOneOptions, FindManyOptions} from "typeorm";
 import {RolPorUsuarioEntity} from "./rol-por-usuario.entity";
+import { RolPorUsuarioInterface } from "./rol-por-usuario.controller";
 
 @Injectable()
 export class RolPorUsuarioService {
@@ -56,5 +57,22 @@ export class RolPorUsuarioService {
     }
 
 
+    async asignarRol(rolAsignar:RolPorUsuarioInterface): Promise<RolPorUsuarioEntity> {
+        const respuestRolEntity = this._rolPorUsuarioService.create(rolAsignar);
+        const rolAsignado = await this._rolPorUsuarioService.save(respuestRolEntity);
+        return rolAsignado;   
+    }
+ 
+    async verificarRoles(usuarioRol:RolPorUsuarioInterface): Promise<RolPorUsuarioEntity> {
+
+        const consulta: FindOneOptions<RolPorUsuarioEntity> = {
+            where: {
+                usuario: usuarioRol.usuario,
+                rol: usuarioRol.rol
+
+            }
+        };
+        return await this._rolPorUsuarioService.findOne(consulta);
+    }
     
 }

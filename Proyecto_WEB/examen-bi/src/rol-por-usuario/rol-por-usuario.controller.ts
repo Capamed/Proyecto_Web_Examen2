@@ -5,6 +5,8 @@ import { UsuarioService } from "src/usuario/usuario.service";
 import { stringify } from "querystring";
 import { RolEntity } from "src/rol/rol.entity";
 import { RolService } from "src/rol/rol.service";
+import { RolDto } from "src/dto/rol.dto";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
 
 @Controller('rol-por-usuario')
 
@@ -28,19 +30,28 @@ export class RolPorUsuarioController {
         const usuarioActualizar = await this._usuarioService.buscarPorId(+idUsuario)
         usuarioRoles = await this._rolPorUsuarioService.obtenerRoles(+idUsuario)
         const opcionesRoles = await this._rolService.obtenerRol();
-
         response.render('asignar-roles', {usuario: usuarioActualizar, rolUsuario: usuarioRoles, opcionesRoles})
 
     }
 
-    @Post('asignar-rol')
+    @Post('asignar-rol/:idUsuario')
     async asginarRol(
-        @Body () rol,
+        @Body()rol:RolPorUsuarioInterface,
         @Res() response,
         @Param('idUsuario') idUsuario,
         @Session() sesion
     ){
-      console.log(rol);
+        rol.usuario = idUsuario
+        const verificarRolesUsuario = await this._rolPorUsuarioService.verificarRoles(rol)
+        if(verificarRolesUsuario){
+            
+console.log('nada')
+        }else{
+            
+        await this._rolPorUsuarioService.asignarRol(rol)
+        response.redirect('/rol-por-usuario/asignar-rol/'+idUsuario)
+    
+        }
     }
 
 
@@ -59,4 +70,12 @@ export class RolPorUsuarioController {
         response.redirect('/rol-por-usuario/asignar-rol/'+rolUsuarioEncontrado.usuario.id);
     }
 
+}
+
+
+export interface RolPorUsuarioInterface
+{
+    id?:number,
+    rol:RolEntity,
+    usuario: UsuarioEntity,
 }

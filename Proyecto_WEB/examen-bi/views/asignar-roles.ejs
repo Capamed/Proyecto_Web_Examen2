@@ -31,6 +31,7 @@
 
 
 <table>
+
     <caption>ROLES</caption>
     <%rolUsuario.forEach((rol)=> { %>
         <tr>
@@ -49,14 +50,18 @@
 <br>
 <br>
 
-<form action="/rol-por-usuario/asignar-rol" method="POST">
-<select>
-    <% opcionesRoles.forEach( (respuesta)=> { %>
-        <option
-            value="<%=respuesta.rol_nombre %>"
-        > 
-            <%=respuesta.rol_nombre%> 
-        </option>
+
+
+<form action="/rol-por-usuario/asignar-rol/<%=usuario.id%>" method="POST">
+    <label for="rol">ROLES</label>
+    <select  name="rol" id="rol">
+ <% opcionesRoles.forEach( (respuesta)=> { %>
+    <option
+         value="<%=respuesta.id%>"
+    > 
+        <%=respuesta.rol_nombre%>
+    </option>   
     <% }) %>
 </select>
+<button>Asignar</button>
 </form>
