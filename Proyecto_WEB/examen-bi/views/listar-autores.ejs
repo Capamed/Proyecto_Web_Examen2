@@ -1,0 +1,48 @@
+<% const existeMensaje = typeof mensaje !== "undefined" %>
+
+<% if(existeMensaje){ %>
+
+<div class="<%= clase %>" role="alert">
+            <span class="font-weight-bold">
+                MENSAJE
+            </span> : <%= mensaje %>
+</div>
+<% } %>
+
+<h1>Gestion de noticias</h1>
+
+<p>Busque, cree actualice y elimine noticias. Puede buscar noticias por el titulo o la descripcion.</p>
+
+<!-- ul -> unordered list  -->
+<!-- ol -> ordered list  -->
+
+<!-- a -> anchor -->
+
+<form method="get" action="/noticia/inicio">
+
+    <div class="row">
+        <div class="col-sm-9">
+
+            <div class="form-group">
+
+                <label for="busqueda">Busqueda</label>
+
+                <input id="busqueda"
+                       type="text"
+                       name="busqueda"
+                       class="form-control">
+            </div>
+
+        </div>
+        <div class="col-sm-3">
+
+            <button
+                    class="btn btn-outline-success btn-block espaciado-busqueda">
+
+                Buscar
+
+            </button>
+
+        </div>
+    </div>
+</form>

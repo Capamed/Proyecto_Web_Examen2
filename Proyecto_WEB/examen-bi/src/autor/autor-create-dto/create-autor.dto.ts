@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsNumber, IsOptional, IsBooleanString, IsDateString } from "class-validator";
 
-export class AutorCreateDto {
+export class CreateAutorDto {
 
     @IsOptional()
     id?: number;
@@ -15,7 +15,7 @@ export class AutorCreateDto {
 
     @IsNotEmpty()
     @IsDateString()
-    fecha_nacimiento?: string;
+    fecha_nacimiento?: Date;
 
     @IsNotEmpty()
     @IsNumber()

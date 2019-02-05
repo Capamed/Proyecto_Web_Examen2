@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
 import { LibroEntity } from "src/libro/libro.entity";
-import { type } from "os";
 import { UsuarioEntity } from "src/usuario/usuario.entity";
 
 @Entity('autor')
@@ -37,7 +36,7 @@ export class AutorEntity{
             default:'1/1/1995'
         }
     )
-    fecha_nacimiento?: string;
+    fecha_nacimiento?: Date;
 
     @Column(
         {
@@ -53,7 +52,7 @@ export class AutorEntity{
             type: 'boolean',
         }
     )
-    ecuatoriano: boolean;
+    es_ecuatoriano: boolean;
 
     @OneToMany(
         type => LibroEntity, 

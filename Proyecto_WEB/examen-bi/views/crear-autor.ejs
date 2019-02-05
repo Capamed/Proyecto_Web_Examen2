@@ -3,6 +3,18 @@
 
 <div class="container">
 
+    <% const existeMensaje = typeof mensaje !== "undefined" %>
+
+    <% if(existeMensaje){ %>
+
+    <div class="<%= clase %>" role="alert">
+            <span class="font-weight-bold">
+                MENSAJE
+            </span> : <%= mensaje %>
+    </div>
+    <% } %>
+
+
     <% const estaCreando = typeof autor === "undefined" %>
 
     <h1> <%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</h1>
