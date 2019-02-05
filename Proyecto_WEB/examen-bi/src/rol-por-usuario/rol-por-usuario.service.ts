@@ -54,4 +54,7 @@ export class RolPorUsuarioService {
         };
         return await this._rolPorUsuarioService.findOne(consulta);
     }
+
+
+    
 }

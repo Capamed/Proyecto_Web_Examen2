@@ -7,14 +7,15 @@ import {RolPorUsuarioService} from "./rol-por-usuario.service";
 import {RolPorUsuarioController} from "./rol-por-usuario.controller";
 import { UsuarioService } from "src/usuario/usuario.service";
 import { UsuarioModule } from "src/usuario/usuario.module";
+import { RolModule } from "src/rol/rol.module";
 
 @Module(
     {
         imports:[
             TypeOrmModule.forFeature(
-            [RolPorUsuarioEntity]),UsuarioModule
+            [RolPorUsuarioEntity]),UsuarioModule,RolModule
         ],
-        providers:[RolPorUsuarioService],
+        providers:[RolPorUsuarioService,RolService],
         controllers:[RolPorUsuarioController],
         exports:[RolPorUsuarioService]
     }
