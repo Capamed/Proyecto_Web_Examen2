@@ -1,8 +1,6 @@
-import { Controller, Get, Param, Post, Body, Delete, Req } from "@nestjs/common";
-import { EventoUpdateDto } from "./evento-update-dto/evento-update.dto";
-import { EventoService } from "./evento.service";
-import { EventoCreateDto } from "./evento-create-dto/evento-create.dto";
+import { Controller, Get, Param, Post, Body, Delete, Req, Res } from "@nestjs/common";
 
+import { EventoService } from "./evento.service";
 
 @Controller('evento')
 
@@ -12,37 +10,30 @@ export class EventoController {
         private readonly _eventoService: EventoService
     ) { }
  
-    @Get('buscar')
-    findAll() {
-        return this._eventoService.findAll();
-    }
- 
-    @Get('buscarPorId/:id')
-    findOne(
-        @Param('id') id
-    ) {
-        return this._eventoService.findOne(id);
-    }
+    @Get('crear-evento')
+    mostrarCrearEvento(
+        @Res() response
+){
+        response.render('crear-evento')
+}
 
-    @Post('crear')
-    create(
-        @Body() eventoCrear: EventoCreateDto
-    ) {
-        return this._eventoService.create(eventoCrear);
-    }
+@Post('crear-evento')
+   async  metodoCrearEvento(
+        @Res() response,
+        @Body() evento:EventoInterface,
+){
+        await this._eventoService.crear(evento);
+    const parametrosConsulta = `?accion=crear&nombre=${evento.nombreEvento}`;
 
-    @Delete('eliminar/:id')
-    eliminarUno(
-        @Req() req
-    ) {
-        return this._eventoService.delete(req.params.id);
-    }
- 
-    @Post('editar/:id')
-    editarUno(
-        @Param('id') idEvento,
-        @Body() eventoEditar: EventoUpdateDto
-    ) { 
-        return this._eventoService.update(idEvento, eventoEditar);
-    }
+    response.redirect('/autor/autor' + parametrosConsulta)
+
+}
+}
+
+
+export interface EventoInterface{
+    nombreEvento: string
+    fechaEvento: Date
+    longitud: number
+    latitud: number
 }

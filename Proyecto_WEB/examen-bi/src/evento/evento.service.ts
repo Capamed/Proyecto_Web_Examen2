@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, FindManyOptions } from "typeorm";
 import { EventoEntity } from "./evento.entity";
-import { EventoUpdateDto } from "./evento-update-dto/evento-update.dto";
-import { EventoCreateDto } from "./evento-create-dto/evento-create.dto";
+import { EventoInterface } from "./evento.controller";
+
 
 
 @Injectable()
@@ -14,29 +14,15 @@ export class EventoService {
         private readonly _eventoRepository: Repository<EventoEntity>
     ) { }
 
-    async findOne(id: number) {
-        return await this._eventoRepository.findOne(id);
+   
+    buscar(parametros?: FindManyOptions<EventoEntity>): Promise<EventoEntity[]> {
+        return this._eventoRepository.find(parametros)
     }
 
-    async findAll() {
-        return await this._eventoRepository.find();
-    }
-
-    async create(datosCrearEvento: EventoCreateDto) {
-        return await this._eventoRepository.save(datosCrearEvento)
-    }
-
-    async delete(id: number) {
-        return await this._eventoRepository.delete(id);
-    } 
-
-    async update(id: number, datosEditarEvento: EventoUpdateDto) {
-        const editarEvento = this.findOne(id)
-        if (editarEvento) {
-            return await this._eventoRepository.update(id, datosEditarEvento)
-        } else {
-            console.log('usuario no econtrado, se lo actualizara')
-        }
+    async crear(evento: EventoInterface): Promise<EventoEntity> {
+        const eventoEntity = this._eventoRepository.create(evento);
+        const eventoCreado = await this._eventoRepository.save(eventoEntity);
+        return eventoCreado;
     }
     
 }

@@ -1,0 +1,116 @@
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+<%- include('header'); %>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+<div class="container">
+    <h1 align="center">Tabla de Autores</h1>
+
+    <form action="/autor/autor" method="get">
+
+        <label for="busqueda">Buscar Autor</label>
+        <input id="busqueda" type="text" name="busqueda">
+
+        <button>Buscar</button>
+    </form>
+
+    <a href="/autor/crear-Autor">
+        <button>Ingrese un nuevo Autor</button>
+    </a>
+
+
+    <table>
+        <!-- tr -> table row -->
+        <tr>
+            <!-- th -> table header -->
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Número de Libros</th>
+            <th>Es Ecuatoriano?</th>
+        </tr>
+        <!-- tr -> table row -->
+        <% arregloAutor.forEach( (autor)=> { %>
+            <tr>
+                <!-- td -> table detail -->
+                <td><%= autor.nombre_autor %></td>
+                <td><%= autor.apellido_autor %></td>
+                <td><%= autor.fecha_nacimiento %></td>
+                <td><%= autor.numero_libros %></td>
+                <td><%= autor.ecuatoriano %></td>
+                <td>
+                    <form action="/autor/borrar/<%=autor.id %>" method="POST">
+                        <button type="submit"> Eliminar</button>
+                    </form>
+                    <a href="/autor/actualizar-Autor/<%= autor.id %>">
+                        <button>Actualizar</button>
+                    </a>
+                    <br>
+                    <br>
+                    <a href="/libro/inicio/<%= autor.id %>">
+                        <button>Ver Autor </button>
+                    </a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+
+    <h1 align="center">Lista de eventos</h1>
+
+    <a href="/evento/crear-evento">
+        <button>Ingresar un nuevo evento</button>
+    </a>
+
+
+    <table >
+        <!-- tr -> table row -->
+        <tr>
+            <!-- th -> table header -->
+            <th>Nombre del evento</th>
+            <th>Fecha</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Acciones</th>
+        </tr>
+        <!-- tr -> table row -->
+        <% arregloEvento.forEach( (evento)=> { %>
+            <tr>
+                <!-- td -> table detail -->
+                <td><%= evento.nombreEvento%></td>
+                <td><%= evento.fechaEvento%></td>
+                <td><%= evento.longitud %></td>
+                <td><%= evento.latitud %></td>
+                <td>
+                    <a href="/evento/actualizar-evento/<%= evento.id %>">
+                        <button>Actualizar</button>
+                    </a>
+                    <br>
+                    <br>
+                    <a href="/evento/eliminar-evento/<%= evento.id %>">
+                        <button>Eliminar </button>
+                    </a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+
+
+</div>
+</body>
+</html>

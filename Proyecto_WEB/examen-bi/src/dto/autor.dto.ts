@@ -1,16 +1,16 @@
-import { IsNotEmpty, IsString, IsNumber,  IsOptional, IsDateString, IsBooleanString } from "class-validator";
+import { IsNotEmpty, IsString, IsNumber, IsOptional, IsBooleanString, IsDateString, IsAlpha, IsInt, IsBoolean } from "class-validator";
 
-export class AutorUpdateDto {
+export class AutorDto {
 
     @IsOptional()
     id?: number;
 
     @IsNotEmpty()
-    @IsString()
+    @IsAlpha()
     nombre_autor?: string;
 
     @IsNotEmpty()
-    @IsString()
+    @IsAlpha()
     apellido_autor?: string;
 
     @IsNotEmpty()
@@ -18,11 +18,11 @@ export class AutorUpdateDto {
     fecha_nacimiento?: string;
 
     @IsNotEmpty()
-    @IsNumber()
+    @IsInt()
     numero_libros?: number;
 
     @IsNotEmpty()
-    @IsBooleanString()
+    @IsBoolean()
     ecuatoriano?: boolean;
-    
+
 }

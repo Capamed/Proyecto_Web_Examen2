@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Post, Session, Body, BadRequestException, Param } from '@nestjs/common';
+import { Controller, Get, Res, Post, Session, Body, BadRequestException, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CredencialesDto } from './dto/credenciales.dto';
 import { validate } from 'class-validator';
@@ -15,10 +15,18 @@ export class AppController {
   @Get('login')
   credenciales(
       @Res() response,
+      @Query('error')error,
 
   ) {
-  
-      response.render('login')
+    let mensaje = undefined;
+
+    if(error){
+        mensaje = "Datos erroneos";
+    }
+
+    response.render('login',{
+        mensaje:mensaje
+    })
   }
 
   @Post('credenciales')
@@ -35,7 +43,8 @@ export class AppController {
       const arregloErrores = await validate(usuario);
       const existeErrores = arregloErrores.length > 0;
       if (existeErrores) {          
-          throw new BadRequestException('Datos incorrectos');
+        const parametrosConsulta = `?error=${arregloErrores[0].constraints}`;
+        response.redirect('/login'+parametrosConsulta)
       } else {
           const respuestaAutenticacion = await this._usuarioService.credenciales(usuario)
 
@@ -50,7 +59,7 @@ export class AppController {
 
                      switch (nombreRol) {
                       case 'usuario':
-                      response.redirect('/usuario/crear-usuario')
+                      response.redirect('/autor/autor')
                           break;
                       case 'administrador':
                       response.redirect('/usuario/inicio')

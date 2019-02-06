@@ -24,7 +24,6 @@ export class RolPorUsuarioController {
         @Res() response,
         @Param('idUsuario') idUsuario,
         @Query('verificacion')verificacion,
-        @Query('')rol,
         @Session() sesion
     ){
         if(sesion.rol==='administrador') {
@@ -38,7 +37,7 @@ export class RolPorUsuarioController {
         const opcionesRoles = await this._rolService.obtenerRol();
         response.render('asignar-roles', {usuario: usuarioActualizar, rolUsuario: usuarioRoles, opcionesRoles, mensaje})
     }else{
-        throw new BadRequestException({mensaje: "No tiene acceso a esta vista por ser usuario"});
+       response.redirect('/login') 
     }
     }
 

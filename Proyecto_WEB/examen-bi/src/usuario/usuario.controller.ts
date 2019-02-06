@@ -21,8 +21,17 @@ export class UsuarioController {
     @Get('crear-usuario')
     crearUsuario(
         @Res() response,
+        @Query('error')error:string
     ) {
-        response.render('crear-usuario')
+        let mensaje = undefined;
+
+        if(error){
+            mensaje = "Datos erroneos";
+        }
+
+        response.render('crear-usuario',{
+            mensaje:mensaje
+        })
     }
 
     @Post('crear-usuario')
@@ -38,8 +47,8 @@ export class UsuarioController {
         const arregloErrores = await validate(usuario);
         const existeErrores = arregloErrores.length > 0;
         if (existeErrores) {
-            console.error('Errores: Usuario a crear - ', arregloErrores);
-            throw new BadRequestException('Datos incorrectos');
+            const parametrosConsulta = `?error=${arregloErrores[0].constraints}`;
+            response.redirect('/usuario/crear-usuario'+parametrosConsulta)
         } else {
             await this._usuarioService.crearUsuario(usuario);
             response.redirect('/login');

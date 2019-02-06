@@ -31,9 +31,7 @@ export class AutorEntity{
     @Column(
         {
             name:'fecha_nacimiento',
-            type: 'varchar',
-            length:10,
-            default:'1/1/1995'
+            type:"date"
         }
     )
     fecha_nacimiento?: Date;
@@ -52,7 +50,7 @@ export class AutorEntity{
             type: 'boolean',
         }
     )
-    es_ecuatoriano: boolean;
+    ecuatoriano: boolean;
 
     @OneToMany(
         type => LibroEntity, 

@@ -1,78 +1,69 @@
-<%- include('header',{titulo:titulo}) %>
+<% const estaCreando = typeof paciente === "undefined"%>
+
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+
+<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Autor</h1>
+
+<p><%= estaCreando ? 'Registre':'Actualice' %> a un Autor</p>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
 
 
-<div class="container">
+<form action="/autor/<%= estaCreando ? 'crear' : 'actualizar' %>-Autor/<%= estaCreando ? '' : autor.id %>"
+      method="POST">
 
-    <% const existeMensaje = typeof mensaje !== "undefined" %>
-
-    <% if(existeMensaje){ %>
-
-    <div class="<%= clase %>" role="alert">
-            <span class="font-weight-bold">
-                MENSAJE
-            </span> : <%= mensaje %>
+    <div>
+        <label for="nombre_autor">Nombre:</label>
+        <input id="nombre_autor"
+               type="text"
+               name="nombre_autor"
+               value="<%= estaCreando ? '' : autor.nombre_autor %>" required>
     </div>
-    <% } %>
+    <br>
+    <div>
+        <label for="apellido_autor">Apellido:</label>
+        <input id="apellido_autor"
+               type="text"
+               name="apellido_autor"
+               value="<%= estaCreando ? '' : autor.apellido_autor %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input id="fecha_nacimiento"
+               type="date"
+               min="1900-01-01"
+               max="2019-02-08"
+               name="fecha_nacimiento"
+               value="<%= estaCreando ? '' : autor.fecha_nacimiento %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="numero_libros">Numero de libros:</label>
+        <input id="numero_libros"
+               type="number"
+               min="0"
+               max="15"
+               name="numero_libros"
+               value="<%= estaCreando ? '' : autor.numero_libros %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="ecuatoriano">Es Ecuatoriano:</label>
+        <select name="ecuatoriano" id="ecuatoriano">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+    </div>
 
 
-    <% const estaCreando = typeof autor === "undefined" %>
+    <br>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</button>
 
-    <h1> <%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</h1>
+</form>
 
-    <p><%= estaCreando ? 'Cree' : 'Actualice' %> un autor.</p>
-
-    <form
-            action="/autor/<%= estaCreando ? 'crear' : 'actualizar' %>-autor/<%= estaCreando ? '' : autor.id %>"
-            method="POST">
-
-        <div>
-            <label for="nombre-autor">Nombres:</label>
-            <input
-                    id="nombre-autor"
-                    name="nombre-autor"
-                    type="text"
-                    value="<%= estaCreando ? '' : autor.nombres %>">
-        </div>
-
-        <div>
-            <label for="apellido-autor">Apellidos:</label>
-            <input
-                    id="apellido-autor"
-                    name="apellido-autor"
-                    type="text"
-                    value="<%= estaCreando ? '' : autor.apellidos %>">
-        </div>
-
-        <div>
-            <label for="fecha-nacimiento-autor">Fecha de nacimiento:</label>
-            <input
-                    id="fecha-nacimiento-autor"
-                    name="fecha-nacimiento-autor"
-                    type="date"
-                    value="<%= estaCreando ? '' : autor.fechaNacimiento %>">
-        </div>
-
-        <div class="form-group">
-            <label for="nacionalidad">Ecuatoriando</label>
-            <select class="form-control" id="nacionalidad">
-                <option value="1">Sí</option>
-                <option value="2">No</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="numero-libros-autor">Numero de libros:</label>
-            <input
-                    id="numero-libros-autor"
-                    name="numero-libros-autor"
-                    type="number"
-                    value="<%= estaCreando ? '' : autor.numeroLibros %>">
-        </div>
-
-        <button><%= estaCreando ? 'Crear' : 'Actualizar' %> autor</button>
-    </form>
-</div>
-
-
-<%- include('librerias') %>
-<%- include('footer') %>
+<a href="/autor/autor">
+    <button>Regresar</button>
+</a>

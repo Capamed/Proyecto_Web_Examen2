@@ -2,9 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { AutorEntity } from './autor.entity';
-import { CreateAutorDto } from './autor-create-dto/create-autor.dto';
-import { AutorUpdateDto } from './autor-update-dto/autor-update.dto';
-import { AutorInterface } from './autor.interface';
+import { AutorInterface } from './autor.controller';
+
 
 @Injectable()
 export class AutorService {
@@ -14,36 +13,34 @@ export class AutorService {
   ) {
   }
 
-  async findLike(parametrosBusqueda?: FindManyOptions<AutorEntity>)
-    : Promise<AutorEntity[]> {
-    return this._autorRepository.find(parametrosBusqueda);
-  }
-
-  async findOne(id: number) {
-    return await this._autorRepository.findOne(id);
-  }
-
-  async findAll() {
-    return await this._autorRepository.find();
-  }
-
-  async create(autor: AutorInterface) {
-    const autorEntity: AutorEntity = this._autorRepository.create(autor);
-    return await this._autorRepository.save(autorEntity);
-  }
-
-  async delete(id: number) {
-    return await this._autorRepository.delete(id);
-  }
-
-
-  async update(id: number, datosEditarAutor: AutorUpdateDto) {
-    const editarAutor = this.findOne(id);
-    if (editarAutor) {
-      return await this._autorRepository.update(id, datosEditarAutor);
-    } else {
-      console.log('usuario no econtrado, se lo actualizara');
-    }
-  }
-
+  buscar(parametros?: FindManyOptions<AutorEntity>): Promise<AutorEntity[]> {
+    return this._autorRepository.find(parametros)
 }
+
+async crear(nuevoautor: AutorInterface): Promise<AutorEntity> {
+    console.log('servciooooo',nuevoautor)
+    // Instanciar una entidad -> .create()
+    const autorEntity = this._autorRepository.create(nuevoautor);
+    const autorCreado = await this._autorRepository.save(autorEntity);
+    return autorCreado;
+}
+
+actualizar(id: number, nuevoAutor: AutorInterface): Promise<AutorEntity> {
+
+    nuevoAutor.id = id;
+    const autorEntity = this._autorRepository.create(nuevoAutor);
+    return this._autorRepository.save(autorEntity)
+}
+
+borrar(id: number): Promise<AutorEntity> {
+    const autorEntityEliminar = this._autorRepository.create({
+        id: id
+    });
+    return this._autorRepository.remove(autorEntityEliminar)
+}
+
+buscarPorId(id: number): Promise<AutorEntity> {
+    return this._autorRepository.findOne(id)
+}
+}
+
