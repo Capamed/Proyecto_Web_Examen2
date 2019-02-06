@@ -15,7 +15,7 @@ export class LibroEntity{
             type: 'int',
         }
     )
-    icbn_libro?: number;
+    isbn_libro?: number;
     
     @Column(
         {

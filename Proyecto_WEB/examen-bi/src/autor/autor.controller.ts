@@ -84,8 +84,6 @@ export class AutorController {
               {
                   arregloAutor: autores,
                   mensaje: mensaje,
-                  arregloEvento: evento
-
               })
       }else{
           throw new BadRequestException({mensaje: "No tiene acceso a esta vista"});

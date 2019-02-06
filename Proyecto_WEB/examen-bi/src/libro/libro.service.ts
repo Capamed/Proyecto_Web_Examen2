@@ -2,8 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { LibroEntity } from "./libro.entity";
-import { LibroCreateDto } from "./libro-create-dto/libro-create.dto";
-import { LibroUpdateDto } from "./libro-update-dto/libro-update.dto";
 
 @Injectable()
 
@@ -13,29 +11,61 @@ export class LibroService {
         private readonly _libroRepository: Repository<LibroEntity>
     ) { }
 
-    async findOne(id: number) {
-        return await this._libroRepository.findOne(id);
+    
+    async buscarPorIdPacie(idPaciente: number):Promise <MedicamentoEntity[]>{
+        const medicamentoUsuario: FindManyOptions<MedicamentoEntity> =
+            { where: {
+                    paciente: idPaciente
+                }}
+        return await this._medicamentoRepository.find(medicamentoUsuario)
     }
 
-    async findAll() {
-        return await this._libroRepository.find();
+
+
+
+    //buscar
+    buscar( parametros?: FindManyOptions<MedicamentoEntity>): Promise<MedicamentoEntity[]> {
+
+
+
+        return this._medicamentoRepository.find(parametros)
     }
 
-    async create(datosCrearLibro: LibroCreateDto) {
-        return await this._libroRepository.save(datosCrearLibro)
+    async crear(nuevoMedicamento: Medicamento): Promise<MedicamentoEntity> {
+
+        // Instanciar una entidad -> .create()
+        const medicamentoEntity = this._medicamentoRepository.create(nuevoMedicamento);
+        const medicamentoCreado = await this._medicamentoRepository.save(medicamentoEntity);
+        return medicamentoCreado;
     }
 
-    async delete(id: number) {
-        return await this._libroRepository.delete(id);
-    } 
+    actualizar(id: number, nuevoMedicamento: Medicamento): Promise<MedicamentoEntity> {
 
-    async update(id: number, datosEditarLibro: LibroUpdateDto) {
-        const editarLibro = this.findOne(id)
-        if (editarLibro) {
-            return await this._libroRepository.update(id, datosEditarLibro)
-        } else {
-            console.log('pelicula no econtrada, no se lo actualizara')
-        }
+        nuevoMedicamento.id = id;
+        const medicamentoEntity = this._medicamentoRepository.create(nuevoMedicamento);
+        return this._medicamentoRepository.save(medicamentoEntity)
     }
+
+    borrar(id: number): Promise<MedicamentoEntity> {
+        const medicamentoEntityEliminar = this._medicamentoRepository.create({
+            id: id
+        });
+        return this._medicamentoRepository.remove(medicamentoEntityEliminar)
+    }
+
+    buscarPorId(id: number): Promise<MedicamentoEntity> {
+        return this._medicamentoRepository.findOne(id)
+    }
+
+   async buscarPorIdAutor(idPaciente: number):Promise <MedicamentoEntity[]>{
+        const medicamentoUsuario: FindManyOptions<MedicamentoEntity> =
+            { where: {
+                paciente: idPaciente
+                }}
+                return await this._medicamentoRepository.find(medicamentoUsuario)
+    }
+
+
+
     
 }

@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsString, IsOptional, IsInt, IsDateString } from "class-validator";
 
-export class LibroUpdateDto {
+export class LibroCreateDto {
 
     @IsOptional()
     id?: number;
 
     @IsNotEmpty()
     @IsInt()
-    icbn_libro?: number;
+    isbn_libro?: number;
 
     @IsNotEmpty()
     @IsString()
@@ -28,5 +28,5 @@ export class LibroUpdateDto {
     @IsNotEmpty()
     @IsString()
     nombre_editorial?: string;
-    
+
 }
