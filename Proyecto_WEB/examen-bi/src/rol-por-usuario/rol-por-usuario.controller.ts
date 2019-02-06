@@ -38,7 +38,7 @@ export class RolPorUsuarioController {
         const opcionesRoles = await this._rolService.obtenerRol();
         response.render('asignar-roles', {usuario: usuarioActualizar, rolUsuario: usuarioRoles, opcionesRoles, mensaje})
     }else{
-        throw new BadRequestException({mensaje: "No tiene acceso a esta vista"});
+        throw new BadRequestException({mensaje: "No tiene acceso a esta vista por ser usuario"});
     }
     }
 
