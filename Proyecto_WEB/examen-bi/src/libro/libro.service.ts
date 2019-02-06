@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, FindManyOptions } from "typeorm";
 import { LibroEntity } from "./libro.entity";
+import { LibroInterface } from "./libro.controller";
 
 @Injectable()
 
@@ -12,57 +13,57 @@ export class LibroService {
     ) { }
 
     
-    async buscarPorIdPacie(idPaciente: number):Promise <MedicamentoEntity[]>{
-        const medicamentoUsuario: FindManyOptions<MedicamentoEntity> =
+    async buscarPorIdPacie(idPaciente: number):Promise <LibroEntity[]>{
+        const medicamentoUsuario: FindManyOptions<LibroEntity> =
             { where: {
                     paciente: idPaciente
                 }}
-        return await this._medicamentoRepository.find(medicamentoUsuario)
+        return await this._libroRepository.find(medicamentoUsuario)
     }
 
 
 
 
     //buscar
-    buscar( parametros?: FindManyOptions<MedicamentoEntity>): Promise<MedicamentoEntity[]> {
+    buscar( parametros?: FindManyOptions<LibroEntity>): Promise<LibroEntity[]> {
 
 
 
-        return this._medicamentoRepository.find(parametros)
+        return this._libroRepository.find(parametros)
     }
 
-    async crear(nuevoMedicamento: Medicamento): Promise<MedicamentoEntity> {
+    async crear(nuevoLibro: LibroInterface): Promise<LibroEntity> {
 
         // Instanciar una entidad -> .create()
-        const medicamentoEntity = this._medicamentoRepository.create(nuevoMedicamento);
-        const medicamentoCreado = await this._medicamentoRepository.save(medicamentoEntity);
+        const medicamentoEntity = this._libroRepository.create(nuevoLibro);
+        const medicamentoCreado = await this._libroRepository.save(medicamentoEntity);
         return medicamentoCreado;
     }
 
-    actualizar(id: number, nuevoMedicamento: Medicamento): Promise<MedicamentoEntity> {
+    actualizar(id: number, nuevoLibro: LibroInterface): Promise<LibroEntity> {
 
-        nuevoMedicamento.id = id;
-        const medicamentoEntity = this._medicamentoRepository.create(nuevoMedicamento);
-        return this._medicamentoRepository.save(medicamentoEntity)
+        nuevoLibro.id = id;
+        const medicamentoEntity = this._libroRepository.create(nuevoLibro);
+        return this._libroRepository.save(medicamentoEntity)
     }
 
-    borrar(id: number): Promise<MedicamentoEntity> {
-        const medicamentoEntityEliminar = this._medicamentoRepository.create({
+    borrar(id: number): Promise<LibroEntity> {
+        const medicamentoEntityEliminar = this._libroRepository.create({
             id: id
         });
-        return this._medicamentoRepository.remove(medicamentoEntityEliminar)
+        return this._libroRepository.remove(medicamentoEntityEliminar)
     }
 
-    buscarPorId(id: number): Promise<MedicamentoEntity> {
-        return this._medicamentoRepository.findOne(id)
+    buscarPorId(id: number): Promise<LibroEntity> {
+        return this._libroRepository.findOne(id)
     }
 
-   async buscarPorIdAutor(idPaciente: number):Promise <MedicamentoEntity[]>{
-        const medicamentoUsuario: FindManyOptions<MedicamentoEntity> =
+   async buscarPorIdAutor(idPaciente: number):Promise <LibroEntity[]>{
+        const medicamentoUsuario: FindManyOptions<LibroEntity> =
             { where: {
                 paciente: idPaciente
                 }}
-                return await this._medicamentoRepository.find(medicamentoUsuario)
+                return await this._libroRepository.find(medicamentoUsuario)
     }
 
 

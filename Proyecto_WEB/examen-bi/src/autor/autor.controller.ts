@@ -27,9 +27,10 @@ export class AutorController {
       console.log(sesion.rol)
       if(sesion.rol==='usuario') {
           let mensaje = undefined;
-          console.log(sesion)
+         // console.log('asdasdasd',accion)
 
           if (accion && nombre) {
+              console.log('acttosoods',accion)
             switch (accion) {
                 case 'actualizar':
                     mensaje = `Registro ${nombre} actualizado`;
@@ -84,6 +85,7 @@ export class AutorController {
               {
                   arregloAutor: autores,
                   mensaje: mensaje,
+                  
               })
       }else{
           throw new BadRequestException({mensaje: "No tiene acceso a esta vista"});
@@ -198,6 +200,7 @@ export class AutorController {
 
       const usuarioActualizar = await this._autorService
           .buscarPorId(Number(idAutor));
+console.log('asdasdasdasdasdasdasdasd',mensaje)
 
       response.render(
           'crear-Autor', {//ir a la pantalla de crear-usuario
@@ -246,7 +249,7 @@ export class AutorController {
           await this._autorService.actualizar(+idAutor, autor);
 
           const parametrosConsulta = `?accion=actualizar&nombre=${autor.nombre_autor}`;
-
+console.log('asdasdasdasd',parametrosConsulta)
           response.redirect('/autor/autor' + parametrosConsulta);
       }
 

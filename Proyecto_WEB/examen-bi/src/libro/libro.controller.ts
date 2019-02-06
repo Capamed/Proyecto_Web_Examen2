@@ -4,6 +4,7 @@ import { AutorEntity } from "src/autor/autor.entity";
 import { Like, FindManyOptions } from "typeorm";
 import { LibroEntity } from "./libro.entity";
 import { LibroCreateDto } from "src/dto/libro.dto";
+import { ValidationError, validate } from "class-validator";
 
 
 
@@ -80,7 +81,7 @@ export class LibroController {
 
     //se inicializa la pantalla de crear medicamento
     @Get('crear-libro/:idAutor')
-    crearMedicamento(
+    crearLibro(
         @Res() response,
         @Param('idAutor') idAutor: string,
         @Query('error') error: string
@@ -112,18 +113,21 @@ export class LibroController {
 
         const libroValidacion = new LibroCreateDto();
 
+        libro.isbn_libro = Number(libro.isbn_libro)
         libroValidacion.isbn_libro = libro.isbn_libro
-        libroValidacion.nombre_libro = libro.nombre_libro
         
-        libroValidacion.composicion = libro.composicion
-        libroValidacion.usadoPara = libro.usadoPara
+        libroValidacion.nombre_libro = libro.nombre_libro
 
-        const fec = new Date(libro.fechaCaducidad).toISOString();
-        libroValidacion.fechaCaducidad = fec
+        libro.numero_paginas = Number(libro.numero_paginas)
+        libroValidacion.numero_paginas = libro.numero_paginas
 
-        libro.numeroPastillas = Number(libro.numeroPastillas)
-        libroValidacion.numeroPastillas = libro.numeroPastillas
+        libro.edicion = Number(libro.edicion)
+        libroValidacion.edicion = libro.edicion
 
+        const fec = new Date(libro.fecha_publicacion).toISOString();
+        libroValidacion.fecha_publicacion = fec
+
+        
         const errores: ValidationError[] =
             await validate(libroValidacion);
 
@@ -139,35 +143,35 @@ export class LibroController {
 
             await this._libroService.crear(libro);
 
-            const parametrosConsulta = `?accion=crear&nombre=${libro.nombreMedicamento}`;
+            const parametrosConsulta = `?accion=crear&nombre=${libro.nombre_libro}`;
 
-            response.redirect('/medicamento/inicio/' + idAutor + parametrosConsulta)
+            response.redirect('/libro/inicio/' + idAutor + parametrosConsulta)
         }
     }
 
     //BORRAR USUARIO
 
-    @Post('borrar/:idAutor/:idMedicamento/')
+    @Post('borrar/:idAutor/:idLibro/')
     async borrar(
-        @Param('idMedicamento') idMedicamento: string,
+        @Param('idLibro') idLibro: string,
         @Param('idAutor') idAutor: string,
         @Res() response
     ) {
-        const medicamentoEncontrado = await this._medicamentoService
-            .buscarPorId(+idMedicamento);
+        const libroEncontrado = await this._libroService
+            .buscarPorId(+idLibro);
 
-        await this._medicamentoService.borrar(Number(idMedicamento));
+        await this._libroService.borrar(Number(idLibro));
 
-        const parametrosConsulta = `?accion=borrar&nombre=${medicamentoEncontrado.nombreMedicamento}`;
+        const parametrosConsulta = `?accion=borrar&nombre=${libroEncontrado.nombre_libro}`;
 
-        response.redirect('/medicamento/inicio/' + idAutor + parametrosConsulta);
+        response.redirect('/libro/inicio/' + idAutor + parametrosConsulta);
     }
 
     /////actualizar datos del usuario
 
-    @Get('actualizar-medicamento/:idAutor/:idMedicamento')
-    async actualizarMedicamento(
-        @Param('idMedicamento') idMedicamento: string,
+    @Get('actualizar-libro/:idAutor/:idLibro')
+    async actualizarLibro(
+        @Param('idLibro') idLibro: string,
         @Param('idAutor') idAutor: string,
         @Res() response,
         @Query('error') error: string
@@ -178,44 +182,45 @@ export class LibroController {
             mensaje = "Datos erroneos";
         }
 
-        const medicamentoActualizar = await this._medicamentoService
-            .buscarPorId(Number(idMedicamento));
+        const libroActualizar = await this._libroService
+            .buscarPorId(Number(idLibro));
 
         response.render(
-            'crear-medicamento', {//ir a la pantalla de crear-usuario
-                medicamento: medicamentoActualizar,
+            'crear-libro', {//ir a la pantalla de crear-usuario
+                libro: libroActualizar,
                 idAutor: idAutor,
-                idMedicamento: idMedicamento,
+                idLibro: idLibro,
                 mensaje: mensaje
             }
         )
     }
 
-    @Post('actualizar-medicamento/:idAutor/:idMedicamento')
-    async actualizarMedicamentoFormulario(
-        @Param('idMedicamento') idMedicamento: string,
+    @Post('actualizar-libro/:idAutor/:idLibro')
+    async actualizarLibroFormulario(
+        @Param('idLibro') idLibro: string,
         @Param('idAutor') idAutor: string,
         @Res() response,
-        @Body() medicamento: Medicamento
+        @Body() libro: LibroInterface
     ) {
 
         let mensaje = undefined;
+        const libroValidacion = new LibroCreateDto();
 
-        const objetoValidacionMedicamento = new medicamentoDto();
+        libro.isbn_libro = Number(libro.isbn_libro)
+        libroValidacion.isbn_libro = libro.isbn_libro
+        
+        libroValidacion.nombre_libro = libro.nombre_libro
 
-        medicamento.gramosAIngerir = Number(medicamento.gramosAIngerir)
-        objetoValidacionMedicamento.gramosAIngerir = medicamento.gramosAIngerir
-        objetoValidacionMedicamento.nombreMedicamento = medicamento.nombreMedicamento
-        objetoValidacionMedicamento.composicion = medicamento.composicion
-        objetoValidacionMedicamento.usadoPara = medicamento.usadoPara
-        const fec = new Date(medicamento.fechaCaducidad).toISOString();
-        objetoValidacionMedicamento.fechaCaducidad = fec
+        libro.numero_paginas = Number(libro.numero_paginas)
+        libroValidacion.numero_paginas = libro.numero_paginas
 
-        medicamento.numeroPastillas = Number(medicamento.numeroPastillas)
-        objetoValidacionMedicamento.numeroPastillas = medicamento.numeroPastillas
+        libroValidacion.edicion = libro.edicion
+
+        const fec = new Date(libro.fecha_publicacion).toISOString();
+        libroValidacion.fecha_publicacion = fec
 
         const errores: ValidationError[] =
-            await validate(objetoValidacionMedicamento);
+            await validate(libroValidacion);
 
         const hayErrores = errores.length > 0;
 
@@ -224,18 +229,18 @@ export class LibroController {
 
             const parametrosConsulta = `?error=${errores[0].constraints}`;
 
-            response.redirect('/medicamento/actualizar-medicamento/' + idAutor +"/"+ idMedicamento +  parametrosConsulta)
+            response.redirect('/libro/actualizar-libro/' + idAutor +"/"+ idLibro +  parametrosConsulta)
 
         } else {
 
-            medicamento.id = +idMedicamento;
+            libro.id = +idLibro;
 
-            await this._medicamentoService.actualizar(+idMedicamento, medicamento);
+            await this._libroService.actualizar(+idLibro, libro);
 
-            const parametrosConsulta = `?accion=actualizar&nombre=${medicamento.nombreMedicamento}`;
+            const parametrosConsulta = `?accion=actualizar&nombre=${libro.nombre_libro}`;
 
 
-            response.redirect('/medicamento/inicio/' + idAutor + parametrosConsulta);
+            response.redirect('/libro/inicio/' + idAutor + parametrosConsulta);
 
         }
 

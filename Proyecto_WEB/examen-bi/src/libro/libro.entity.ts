@@ -11,7 +11,7 @@ export class LibroEntity{
     
     @Column(
         {
-            name: 'icbn_libro',
+            name: 'isbn_libro',
             type: 'int',
         }
     )
@@ -45,11 +45,10 @@ export class LibroEntity{
     @Column(
         {
             name: 'fecha_publicacion',
-            type: 'varchar',
-            default:'1/1/1995',
+            type: 'date',
         }
     )
-    fecha_publicacion?: string;
+    fecha_publicacion?: Date;
 
     @Column(
         {
