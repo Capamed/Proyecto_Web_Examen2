@@ -1,0 +1,80 @@
+<% const existeMensaje = typeof mensaje !== "undefined" %>
+<%- include('header'); %>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<% if (existeMensaje){ %>
+<p>MENSAJE: <%= mensaje %></p>
+<% } %>
+
+<div class="container">
+    <h1 align="center">Autores Registrados</h1>
+
+    <form action="/autores/listar" method="GET">
+
+        <label for="busqueda">Buscar Autores</label>
+        <input id="busqueda" type="text" name="busqueda">
+
+        <button>Buscar</button>
+    </form>
+
+    <a href="/autores/crear">
+        <button>Agregar Autor</button>
+    </a>
+
+
+    <table class="table table-striped table-dark">
+        <!-- tr -> table row -->
+        <tr>
+            <!-- th -> table header -->
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Número de Libros</th>
+            <th>Es ecuatoriano</th>
+            <th>Acciones</th>
+        </tr>
+        <!-- tr -> table row -->
+        <% arregloAutores.forEach(autor => { %>
+        <tr>
+            <!-- td -> table detail -->
+            <td><%= autor.nombre_autor %></td>
+            <td><%= autor.apellido_autor %></td>
+            <td><%= autor.fecha_nacimiento %></td>
+            <td><%= autor.numero_libros %></td>
+            <td><%= autor.es_ecuatoriano %></td>
+
+            <td>
+                <form action="/autores/borrar/<%= autor.idAutor %>" method="POST">
+                    <button
+                            class="btn btn-outline-info btn-block espaciado-boton" type="submit"
+                            type="submit"> Eliminar
+                    </button>
+                </form>
+                <a href="/autores/actualizar/<%= autor.idAutor %>">
+                    <button class="btn btn-outline-info btn-block espaciado-boton" type="submit">Actualizar</button>
+
+                </a>
+                <a href="/libros/listar/<%=autor.idAutor%>">
+                    <button class="btn btn-outline-info btn-block espaciado-boton" type="submit">
+                        Ver Libros
+                    </button>
+                </a>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+
+    <a href="/eventos/listar">
+        <button class="btn btn-outline-info espaciado-boton">
+            Eventos
+        </button>
+    </a>
+</div>
+
+<%- include('librerias') %>

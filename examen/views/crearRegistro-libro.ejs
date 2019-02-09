@@ -1,0 +1,88 @@
+<% const estaCreando = typeof libro === "undefined"%>
+
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+
+
+<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Libro</h1>
+
+<p><%= estaCreando ? 'Registre':'Actualice' %> un Libro</p>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+
+<form action="/libros/<%=estaCreando ? 'crear' : 'actualizar' %>-Libro/<%=idAutor%>/<%= estaCreando ? '' :libro.id %>"
+      method="POST">
+
+      <div>
+        <label for="autor"></label>
+        <input id="autor"
+               type="text"
+               name="autor"
+               value="<%=estaCreando ? idAutor : idAutor%>"
+               hidden>
+    </div>
+
+    <div>
+        <label for="icbn_libro">Ingresa ISBN:</label>
+        <input id="icbn_libro"
+               type="number"
+               name="icbn_libro"
+               value="<%= estaCreando ? '' : libro.icbn_libro %>"
+               required>
+    </div>
+    <br>
+
+    <div>
+        <label for="nombre_libro">Nombre del Libro:</label>
+        <input id="nombre_libro"
+               type="text"
+               name="nombre_libro"
+               value="<%= estaCreando ? '' : libro.nombre_libro %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="numero_paginas">Numero de paginas:</label>
+        <input id="numero_paginas"
+               type="text"
+               name="numero_paginas"
+               value="<%= estaCreando ? '' : libro.numero_paginas %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="edicion">Edicion:</label>
+        <input id="edicion"
+               type="number"
+               name="edicion"
+               value="<%= estaCreando ? '' : libro.edicion %>"
+               required>
+    </div>
+    
+    <div>
+        <label for="fecha_publicacion">Fecha de Publicacion:</label>
+        <input id="fecha_publicacion"
+               type="date"
+               name="fecha_publicacion"
+               value="<%= estaCreando ? '' : libro.fecha_publicacion %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="nombre_editorial">Nombre de la Editorial:</label>
+        <input id="nombre_editorial"
+               type="text"
+               name="nombre_editorial"
+               value="<%= estaCreando ? '' : libro.nombre_editorial %>"
+               required>
+    </div>
+    <br>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> libro</button>
+
+</form>
+
+<a href="/libros/listar/<%=idAutor%>">
+    <button>Regresar</button>
+</a>

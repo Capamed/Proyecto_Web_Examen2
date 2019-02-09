@@ -1,0 +1,69 @@
+<% const estaCreando = typeof autor === "undefined"%>
+
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+
+<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Autor</h1>
+
+<p><%= estaCreando ? 'Registre':'Actualice' %> un Autor</p>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+
+<form action="/autores/<%= estaCreando ? 'crear' : 'actualizar' %>-Autor/<%= estaCreando ? '' : autor.idAutor %>"
+      method="POST">
+
+    <div>
+        <label for="nombre_autor">Nombres:</label>
+        <input id="nombre_autor"
+               type="text"
+               name="nombre_autor"
+               value="<%= estaCreando ? '' : autor.nombre_autor %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="apellido_autor">Apellidos:</label>
+        <input id="apellido_autor"
+               type="text"
+               name="apellido_autor"
+               value="<%= estaCreando ? '' : autor.apellido_autor %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input id="fecha_nacimiento"
+               type="date"
+               min="1900-01-01"
+               max="2019-02-07"
+               name="fecha_nacimiento"
+               value="<%= estaCreando ? '' : autor.fecha_nacimiento %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="numero_libros">Libros:</label>
+        <input id="numero_libros"
+               type="number"
+               min="0"
+               max="15"
+               name="numero_libros"
+               value="<%= estaCreando ? '' : autor.numero_libros %>" required>
+    </div>
+    <br>
+    <div>
+        <label for="es_ecuatoriano">Usted es ECUATORIANO?:</label>
+        <select name="es_ecuatoriano" id="es_ecuatoriano">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+    </div>
+
+
+    <br>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</button>
+
+</form>
+
+<a href="/autores/listar">
+    <button>Regresar</button>
+</a>
