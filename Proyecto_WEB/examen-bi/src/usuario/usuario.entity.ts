@@ -45,11 +45,10 @@ export class UsuarioEntity {
     @Column(
         {
             name: 'fecha_nacimiento_usuario',
-            type: 'varchar',
-            default: '1/1/1995',
+            type: 'date',
         }
     )
-    fecha_nacimiento_usuario: string;
+    fecha_nacimiento_usuario: Date;
 
 
     @OneToMany(

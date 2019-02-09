@@ -18,7 +18,8 @@
 <h1>Asignar roles </h1>
 
 
-
+<div class="row" >
+    <div class="col-md-4 titulo">
         <table><caption>USUARIO</caption>
             <tr>
                 <td><%= usuario.nombre_usuario %></td>
@@ -30,7 +31,9 @@
                 <td><%= usuario.fecha_nacimiento_usuario %></td>
             </tr>
         </table>
+    </div>
 
+    <div class="col-md-4 titulo">
 
 <table>
 
@@ -47,13 +50,13 @@
     <% }) %>
 </table>
 
-
+</div>
 
 <br>
 <br>
 
 
-
+<div class="col-md-4 titulo">
 <form action="/rol-por-usuario/asignar-rol/<%=usuario.id%>" method="POST">
     <label for="rol">ROLES</label>
     <select  name="rol" id="rol">
@@ -67,3 +70,16 @@
 </select>
 <button>Asignar</button>
 </form>
+</div>
+
+</div>
+
+<div class="row" >
+        <div class="col-md-4 titulo"></div>
+        <div class="col-md-4 titulo"></div>
+        <div class="col-md-4 titulo">
+                <a href="/usuario/inicio">
+                    <button>Ver Usuarios</button>
+                </a>
+        </div>
+</div>

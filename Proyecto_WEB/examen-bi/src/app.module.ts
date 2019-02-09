@@ -30,7 +30,7 @@ import { EventoLibroEntity } from './evento-libro/evento-libro.entity';
           database: 'web',
           // BDD Ya existe -> syrsnchronized: false
           synchronize: true,
-          //dropSchema: true, //borra la base y se vuelve a crear, buena idea para pruebas pero no para produccion
+          dropSchema: false, //borra la base y se vuelve a crear, buena idea para pruebas pero no para produccion
           entities: [
               RolEntity,
               UsuarioEntity,

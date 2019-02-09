@@ -43,10 +43,16 @@ export class UsuarioController {
         usuario.nombre_usuario = usuarioCrear.nombre;
         usuario.email_usuario = usuarioCrear.email;
         usuario.password_usuario = usuarioCrear.password;
-        usuario.fecha_nacimiento_usuario = usuarioCrear.fecha_nacimiento;
+        const fec = new Date(usuarioCrear.fecha_nacimiento_usuario).toISOString();
+        usuario.fecha_nacimiento_usuario = fec
+        
+        console.log(usuario)
         const arregloErrores = await validate(usuario);
         const existeErrores = arregloErrores.length > 0;
+        
+        console.log(existeErrores)
         if (existeErrores) {
+            console.log(arregloErrores)
             const parametrosConsulta = `?error=${arregloErrores[0].constraints}`;
             response.redirect('/usuario/crear-usuario'+parametrosConsulta)
         } else {
@@ -118,9 +124,6 @@ export class UsuarioController {
     
             response.redirect('/usuario/inicio' + parametrosConsulta);
         }
-
-
-
 
 
 
